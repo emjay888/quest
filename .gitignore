@@ -1,0 +1,10 @@
+*.swp
+*~
+*.zip
+*.DS_Store
+*DS_Store
+*.pyc
+.terraform
+terraform.tfstate*
+.terraform.lock.hcl
+.terraform*

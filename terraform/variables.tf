@@ -1,7 +1,6 @@
 variable "aws_profile" {
   type        = string
   description = "Name of AWS credentials profile context to use for authentication"
-  default     = "devops-bluesea"
 }
 
 variable "aws_region" {

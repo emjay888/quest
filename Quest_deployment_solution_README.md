@@ -1,7 +1,17 @@
-This is an overview of my solution for this quest.
+Github URL: https://github.com/ferzconnect01/quest
+1. Public cloud & index page (contains the secret word) -
+`http://nva-quest-01-1043017906.us-east-1.elb.amazonaws.com/`
+2. Docker check -
+`http://nva-quest-01-1043017906.us-east-1.elb.amazonaws.com/docker`
+3. Secret Word check -
+`http://nva-quest-01-1043017906.us-east-1.elb.amazonaws.com/secret_word`
+4. Load Balancer check  -
+`http://nva-quest-01-1043017906.us-east-1.elb.amazonaws.com/loadbalanced`
 
-1. Terraform
-The Terraform configuration files in the directory terraform creates EC2 instances, Target Group with an ALB and bootstraps our application deployment.  
+
+# Overview of my solution for this quest.
+
+### 1. Terraform: configuration files in the directory creates EC2 instances, Target Group with an ALB and bootstraps our application deployment.  
 
 Prerequisites already set up and used for this deployments are:
 VPC and public subnets
@@ -27,7 +37,7 @@ outputs.tf: Declare output variables.
 
 locals.tf: Declare local variables.
 
-### In order to add TLS (https) I'd need a registered domain (I don't have this at this moment) - I've gone ahead to add the configuration files needed to add an ACM generated SSL/TLS cert to an ALB.
+- In order to add TLS (https) I'd need a registered domain (I don't have this at this moment) - I've gone ahead to add the configuration files needed to add an ACM generated SSL/TLS cert to an ALB.
 Prerequisites:
 Registered domain and Hosted Zone in AWS Route53:
 
@@ -36,52 +46,52 @@ Adds Amazon Route53 alias records pointing to our ALB resource.
 
 acm.tf: We request a DNS validated certificate, deploy the required validation records and wait for validation to complete. Upon completion we will be issued an Amazon managed SSL/TLS certificate which we can deploy to our ALB. (on alb.tf you can find the conditional "aws_alb_listener" resource for "https")
 
-2. User_data
+### 2. User_data
 Leveraging the EC2 user_data we bootstrap the commands required to deploy our application.
 
-# update yum packages and install git and docker
+#### update yum packages and install git and docker
 yum update -y
 yum install -y git docker
 
-# In order to run docker without sudo we add ec2 to the docker group and start docker
+#### In order to run docker without sudo we add ec2 to the docker group and start docker
 usermod -a -G docker ec2-user
 systemctl start docker
 systemctl enable docker
 
-# Running as ec2-user, git clone application repo and navigate to the application folder
+#### Running as ec2-user, git clone application repo and navigate to the application folder
 su - ec2-user -s /bin/bash -c "cd ~;
 git clone https://github.com/ferzconnect01/quest.git;
 cd quest;
 
-# Docker build and tag image as quest:v1
+#### Docker build and tag image as quest:v1
 docker build -t quest:v1 .;
 
-# Docker run container. Pass environment variable SECRET_WORD - the value is securely stored in AWS SSM parameter store.
+#### Docker run container. Pass environment variable SECRET_WORD - the value is securely stored in AWS SSM parameter store.
 docker run -d --restart=unless-stopped --env="SECRET_WORD=`/usr/bin/aws --region=${var.aws_region} ssm get-parameters --with-decryption --names /nva-quest-01/docker/secret --query "Parameters[*].Value" --output text`" -p 3000:3000 quest:v1"
 
-3. Dockerfile
-# Declare Base Image
+### 3. Dockerfile
+#### Declares the Base Image
 FROM node:10
 
-# Run the following bash command
+#### Runs the following bash commands
 RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
 
-# set the working directory
+#### sets the working directory
 WORKDIR /home/node/app
 
-# set default user
+#### sets default user
 USER node
 
-# Copy src file and directory to container working directory
+#### Copy's src files and directories to container working directory
 COPY --chown=node:node . .
 
-# Run npm install
+#### Runs npm install tp download the dependencies defined in a package.json
 RUN npm install
 
-# set default command to execute on container startup
+#### sets default command to execute on container startup
 CMD ["node", "src/000.js"]
 
-# Container port to Listen on
+#### Container port to Listen on
 EXPOSE 3000
 
 .dockerignore: Declare files and directories to be excluded when Docker runs ADD or COPY.

@@ -11,7 +11,8 @@ Github URL: https://github.com/ferzconnect01/quest
 
 # Overview of my solution for this quest.
 
-### 1. Terraform: configuration files in the directory creates EC2 instances, Target Group with an ALB and bootstraps our application deployment.  
+### 1. Terraform: 
+Configuration files in this directory creates EC2 instances, Target Group with an ALB and bootstraps our application deployment.  
 
 Prerequisites already set up and used for this deployments are:
 VPC and public subnets
@@ -95,4 +96,5 @@ CMD ["node", "src/000.js"]
 EXPOSE 3000
 
 .dockerignore: Declare files and directories to be excluded when Docker runs ADD or COPY.
+
 .gitignore: Declare files and directories to be excluded on git add command.

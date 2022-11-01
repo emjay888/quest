@@ -11,7 +11,7 @@ Github URL: https://github.com/ferzconnect01/quest
 
 # Overview of my solution for this quest.
 
-### 1. Terraform: 
+### 1. Terraform:
 Configuration files in this directory creates EC2 instances, Target Group with an ALB and bootstraps our application deployment.  
 
 Prerequisites already set up and used for this deployments are:
@@ -86,7 +86,7 @@ USER node
 #### Copy's src files and directories to container working directory
 COPY --chown=node:node . .
 
-#### Runs npm install tp download the dependencies defined in a package.json
+#### Runs npm install and downloads the dependencies defined in a package.json
 RUN npm install
 
 #### sets default command to execute on container startup
@@ -98,3 +98,8 @@ EXPOSE 3000
 .dockerignore: Declare files and directories to be excluded when Docker runs ADD or COPY.
 
 .gitignore: Declare files and directories to be excluded on git add command.
+
+## Given more time, I would improve:
+- I would deploy SSL/TLS CERT to the ALB. Given the solution I chose for this quest. My goal was to deploy a single ALB endpoint that delivered all test stages. ACM would be the amongst the most appropriate method for deploying certificates.
+
+- I would also further automate terraform workflow with a CI/CD pipeline by using github actions. Other than the automation pipelines provide, they also create more visibility, store logs for tracing and are durable.

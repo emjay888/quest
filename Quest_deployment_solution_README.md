@@ -103,3 +103,5 @@ EXPOSE 3000
 - I would deploy SSL/TLS CERT to the ALB. Given the solution I chose for this quest. My goal was to deploy a single ALB endpoint that delivered all test stages. ACM would be amongst the most appropriate method for deploying certificates.
 
 - I would also further automate terraform workflow with a CI/CD pipeline by using github actions. Other than the automation pipelines provide, they also create more visibility, store logs for tracing and are durable.
+
+- I would submit another entry for this quest solution in Microsoft Azure.

@@ -1,6 +1,19 @@
+Updated Github URL: https://github.com/ferzconnect01/quest
+1. Public cloud & index page (contains the secret word) -
+`https://nva-quest-01.devopsisthepath.com/`
+2. Docker check -
+`https://nva-quest-01.devopsisthepath.com/docker`
+3. Secret Word check -
+`https://nva-quest-01.devopsisthepath.com/secret_word`
+4. Load Balancer check  -
+`https://nva-quest-01.devopsisthepath.com/loadbalanced`
+5. TLS check -
+`https://nva-quest-01.devopsisthepath.com/tls`
+
 Github URL: https://github.com/ferzconnect01/quest
 1. Public cloud & index page (contains the secret word) -
 `http://nva-quest-01-1043017906.us-east-1.elb.amazonaws.com/`
+
 2. Docker check -
 `http://nva-quest-01-1043017906.us-east-1.elb.amazonaws.com/docker`
 3. Secret Word check -

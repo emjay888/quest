@@ -34,7 +34,6 @@ resource "aws_lb_target_group_attachment" "main_3000" {
 
 # Create ALB Listener with port forwarding to EC2 Instances TG
 resource "aws_alb_listener" "http" {
-  count             = var.external_zone_name == "" ? 1 : 0
   depends_on        = [aws_lb.main]
   load_balancer_arn = aws_lb.main.id
   port              = 80

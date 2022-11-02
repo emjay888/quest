@@ -79,5 +79,5 @@ variable "instance_application_port" {
 
 variable "external_zone_name" {
   description = "The external zone name for the service"
-  default     = ""
+  default     = "devopsisthepath.com"
 }
